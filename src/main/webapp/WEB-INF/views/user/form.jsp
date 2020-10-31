@@ -18,9 +18,25 @@
 				<div class="col-md-4">
 					<form:input class="form-control" path="userId" placeholder="Enter User Id" required="true"/>
 				</div>
+			</div>
+			<div class="input-group my-1">
+				<label class="col-md-2 control-label">Full Name :</label>
+				<div class="col-md-4">
+					<form:input class="form-control" path="fullName" placeholder="Enter User fullName" required="true"/>
+				</div>
 				<label class="col-md-2 control-label">User Name :</label>
 				<div class="col-md-4">
 					 <form:input class="form-control" path="userName" placeholder="Enter User Name" required="true"/>
+				</div>
+			</div>
+			<div class="input-group my-1">
+				<label class="col-md-2 control-label">Email :</label>
+				<div class="col-md-4">
+					<form:input class="form-control" path="email" placeholder="Enter User email" required="true"/>
+				</div>
+				<label class="col-md-2 control-label">Mobile :</label>
+				<div class="col-md-4">
+					 <form:input class="form-control" path="mobile" placeholder="Enter User mobile number" required="true"/>
 				</div>
 			</div>
 			<div class="input-group">

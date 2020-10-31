@@ -2,11 +2,14 @@ package com.javadoterr.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javadoterr.api.model.User;
 import com.javadoterr.api.service.UserService;
+import com.javadoterr.api.utils.ErrorUtils;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -63,9 +67,12 @@ public class UserController {
 	@RequestMapping(path = "/add", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE ,produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ResponseBody
-	public String addUser(@RequestBody User user) {
-		
-		return this.service.addUser(user);
+	public String addUser(@Valid @RequestBody User user, BindingResult result) {
+		if(result.hasErrors()) {
+			return ErrorUtils.customErrors(result.getAllErrors());
+		}else {
+			return this.service.addUser(user);
+		}
 	}
 	
 	

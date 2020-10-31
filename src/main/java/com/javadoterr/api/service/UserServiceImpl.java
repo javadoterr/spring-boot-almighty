@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
 			}
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 			user.setRole(roleRepository.findById(user.getRoleId()).get());
+			jsonObject.put("status", "success");
 			jsonObject.put("title", message + " Confirmation");
 			jsonObject.put("message", userRepository.save(user).getUserName()+" "+message+" successfully");
 		} catch (JSONException e) {

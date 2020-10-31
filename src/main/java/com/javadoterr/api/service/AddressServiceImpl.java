@@ -46,6 +46,7 @@ public class AddressServiceImpl implements AddressService{
 			User user = userRepository.findById(address.getUserId()).get();
 			address.setUser(user);
 			repository.save(address);
+			jsonObject.put("status", "success");
 			jsonObject.put("title", message + " Confirmation");
 			jsonObject.put("message","Address for "+user.getUserName()+" "+message+ " successfully");
 		} catch (JSONException e) {

@@ -19,8 +19,10 @@
 			<thead>
 				<tr>
 					<th>User Id</th>
+					<th>Full Name</th>
 					<th>User Name</th>
-					<th>Password</th>
+					<th>Email</th>
+					<th>Mobile</th>
 					<th>Role</th>
 					<th>Edit</th>
 					<th>Delete</th>
@@ -30,8 +32,10 @@
 				<c:forEach var="user" items="${users}">
 					<tr>
 						<td>${user.userId }</td>
+						<td>${user.fullName }</td>
 						<td>${user.userName }</td>
-						<td>${user.password }</td>
+						<td>${user.email }</td>
+						<td>${user.mobile }</td>
 						<td>${user.role.name }</td>
 						<td>
 							<a href="javascript:void(0);" onclick="editForm('user', '${user.id}')">

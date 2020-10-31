@@ -33,10 +33,18 @@ function saveRequestData(frm, data, type){
 		dataType:'json',
 		data:JSON.stringify(data),
 		success:function(data){
-			toastr.success(data.message, data.title, {
-				closeButton:true
-			});
-			fetchList(type);
+				if(data.status == "success"){
+					toastr.success(data.message, data.title, {
+						closeButton:true
+					});
+					fetchList(type);
+				}else{
+				toastr.error(data.message, data.title,{
+					allowHtml:true,
+					closeButton:true
+				});
+			}
+			
 		} 
 	});
 
