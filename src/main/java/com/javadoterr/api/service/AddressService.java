@@ -13,5 +13,7 @@ public interface AddressService {
 	public String addAddress(Address address);
 	
 	public String deleteAddressById(Long id);
+	
+	public void refreshCache();
 
 }

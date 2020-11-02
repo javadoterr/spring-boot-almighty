@@ -5,6 +5,11 @@ import java.util.List;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import com.javadoterr.api.model.Address;
@@ -34,6 +39,10 @@ public class AddressServiceImpl implements AddressService{
 
 
 	@Override
+	@Caching(put = {
+			@CachePut(value = "addressCache", key = "#address")
+	})
+//	@CachePut(value = "addressCache", key = "#address")
 	public String addAddress(Address address) {
 		String message = "";
 		JSONObject jsonObject = new JSONObject();
@@ -58,6 +67,7 @@ public class AddressServiceImpl implements AddressService{
 
 
 	@Override
+	@CacheEvict(value = "addressCache", allEntries = true)
 	public String deleteAddressById(Long id) {
 		JSONObject jsonObject = new JSONObject();
 		try {
@@ -73,9 +83,19 @@ public class AddressServiceImpl implements AddressService{
 
 
 	@Override
+	@Cacheable("addressCache")
 	public List<Address> addressList() {
 		
 		return repository.findAll();
+	}
+	
+	@Override
+	@Caching(evict = {
+			@CacheEvict(value = "addressCache", allEntries = true)
+	})
+//	@CacheEvict(value = "addressCache", allEntries = true)
+	public void refreshCache() {
+		
 	}
 	
 	

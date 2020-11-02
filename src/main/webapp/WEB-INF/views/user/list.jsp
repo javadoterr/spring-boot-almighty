@@ -8,8 +8,11 @@
 			<i class="fas fa-user"></i>User List
 		</strong>
 		<div class="text-right">
-			<a href="javascript:void(0);" onclick="addForm('user')">
-				<i class="fas fa-user"></i>New User
+			<a href="javascript:void(0);" class="btn btn-default btn-sm" onclick="addForm('user')" title="Add New User">
+				<i class="fas fa-user"></i>New
+			</a>
+			<a href="javascript:void(0);" class="btn btn-default btn-sm" onclick="refresh('user')" title="Refresh User">
+				<i class="fas fa-user"></i>Refresh
 			</a>
 		</div>
 	</div>

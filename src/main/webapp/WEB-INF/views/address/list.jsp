@@ -8,8 +8,11 @@
 			<i class="fas fa-address-card"></i>Address List
 		</strong>
 		<div class="text-right">
-			<a href="javascript:void(0);" onclick="addForm('address')"> 
-				<i class="fas fa-address-card"></i>New Address
+			<a href="javascript:void(0);" class="btn btn-default btn-sm" onclick="addForm('address')" title="Add New Address">
+				<i class="fas fa-address-card"></i>New
+			</a>
+			<a href="javascript:void(0);" class="btn btn-default btn-sm" onclick="refresh('address')" title="Refresh Address">
+				<i class="fas fa-address-card"></i>Refresh
 			</a>
 		</div>
 	</div>

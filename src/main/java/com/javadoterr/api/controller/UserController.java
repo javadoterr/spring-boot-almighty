@@ -92,6 +92,16 @@ public class UserController {
 		return "/user/list";
 	}
 	
+	@RequestMapping(path = "/refresh", method = RequestMethod.GET)
+	public String refreshCache(Model model) {
+		this.service.refreshCache();
+		List<User> list = this.service.userList();
+		
+		model.addAttribute("users", list);
+				
+		return "/user/list";
+	}
+	
 	@RequestMapping(path = "/delete/{id}", method =  RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ResponseBody

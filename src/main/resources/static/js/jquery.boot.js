@@ -39,6 +39,16 @@ function fetchList(type){
 	});
 }
 
+function refresh(type){
+	$.ajax({
+		type: "GET",
+		url:"/springboot/"+type+"/refresh",
+		success: function(data){
+			$(".inner-jsp").html(data);
+		}
+	});
+}
+
 function deleteData(type, id){
 	toastr.warning("<div>Are you sure you want to delete this ?</div>"+
 			"<div class='btn-group text-right'>" +

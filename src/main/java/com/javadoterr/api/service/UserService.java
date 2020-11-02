@@ -15,6 +15,8 @@ public interface UserService {
 	
 	public String deleteUserById(Long id);
 	
-	List<Role> roleList();
+	public List<Role> roleList();
+	
+	public void refreshCache();
 
 }

@@ -61,6 +61,17 @@ public class AddressController {
 		
 		return "/address/list";
 	}
+	
+	
+	
+	@RequestMapping(path = "/refresh", method = RequestMethod.GET)
+	public String refreshCache(Model model) {
+		this.service.refreshCache();
+		List<Address> list = this.service.addressList();
+		model.addAttribute("addresses", list);
+				
+		return "/address/list";
+	}
 
 	@RequestMapping(path = "/list/{id}")
 	public Address findOne(@PathVariable("id") Long id) {

@@ -6,6 +6,10 @@ import java.util.Optional;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +19,7 @@ import com.javadoterr.api.respository.RoleRepository;
 import com.javadoterr.api.respository.UserRepository;
 
 @Service
+@CacheConfig(cacheNames = {"userCache"})
 public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
@@ -27,6 +32,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Cacheable
+//	@Cacheable("userCache")
 	public List<User> userList() {
 		return userRepository.findAll();
 	}
@@ -39,6 +46,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@CachePut(key = "#user")
+//	@CachePut(value = "userCache", key = "#user")
 	public String addUser(User user) {
 		String message = "";
 		JSONObject jsonObject = new JSONObject();
@@ -61,6 +70,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@CacheEvict(allEntries = true)
+//	@CacheEvict(value = "userCache", allEntries = true)
 	public String deleteUserById(Long id) {
 		JSONObject jsonObject = new JSONObject();
 		try {
@@ -76,6 +87,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Role> roleList() {
 		return roleRepository.findAll();
+	}
+	
+	@Override
+	@CacheEvict(allEntries = true)
+//	@CacheEvict(value = "userCache", allEntries = true)
+	public void refreshCache() {
+		
 	}
 
 }
