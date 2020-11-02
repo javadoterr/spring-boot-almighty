@@ -16,6 +16,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.javadoterr.api.utils.ConstantUtils;
+import com.javadoterr.api.validator.Validate;
 
 @Entity
 public class User extends AbstractPersistable<Long> {
@@ -23,25 +24,26 @@ public class User extends AbstractPersistable<Long> {
 	private transient Long id;
 	
 	@NotNull
-	@Size(min = 6, max = 6, message = "Please enter between {min}-{max} characters and digits")
-	@Pattern(regexp = ConstantUtils.ID_PATTERN, message = "Please enter characters and digits")
+	@Validate(min = 6, max = 6,regexp = ConstantUtils.ID_PATTERN ,message = "Please enter between {min}-{max} characters and digits")
 	private String userId;
+	
 	@NotNull
-	@Size(min = 5, max = 30, message = "Please enter between {min}-{max} characters")
-	@Pattern(regexp = ConstantUtils.CHAR_PATTERN, message = "Please enter only characters")
+	@Validate(min = 5, max = 30,regexp = ConstantUtils.CHAR_PATTERN ,message = "Please enter between {min}-{max} characters and no digits")
 	private String fullName;
+	
 	@NotNull
 	private String userName;
 	@NotNull
 	private String password;
+	
 	@NotNull
-	@Size(min = 10, max = 50, message = "Please enter between {min}-{max} characters")
-	@Pattern(regexp = ConstantUtils.EMAIL_PATTERN, message = "Please enter valid email")
+	@Validate(min = 10, max = 50,regexp = ConstantUtils.EMAIL_PATTERN ,message = "Please enter between {min}-{max} characters and valid email")
 	private String email;
+	
 	@NotNull
-	@Size(min = 10, max = 10, message = "Please enter alteast {min} digits")
-	@Pattern(regexp = ConstantUtils.MOBILE_PATTERN, message = "Please enter only digits")
+	@Validate(min = 10, max = 10,regexp = ConstantUtils.MOBILE_PATTERN ,message = "Please enter alteast {min} digits and no characters")
 	private String mobile;
+	
 	private transient Long roleId;
 
 	@ManyToOne
