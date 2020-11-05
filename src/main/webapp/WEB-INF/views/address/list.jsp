@@ -32,28 +32,47 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="address" items="${addresses }">
-					<tr>
-						<td>${address.country }</td>
-						<td>${address.state }</td>
-						<td>${address.city }</td>
-						<td>${address.addressLine }</td>
-						<td>${address.pinCode }</td>
-						<td>${address.user.userName }</td>
-						<td>
-							<a href="javascript:void(0);" onclick="editForm('address', '${address.id}')">
-								<i class="fas fa-edit"></i>
-							</a>
-						</td>
-						<td>
-							<a href="javascript:void(0);" onclick="deleteData('address', '${address.id}')">
-							 	<i class="fas fa-trash-alt"></i>
-							</a>
-					    </td>
-					</tr>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${addresses.size() > 0 }">
+						<c:forEach var="address" items="${addresses }">
+							<tr>
+								<td>${address.country }</td>
+								<td>${address.state }</td>
+								<td>${address.city }</td>
+								<td>${address.addressLine }</td>
+								<td>${address.pinCode }</td>
+								<td>${address.user.userName }</td>
+								<td><a href="javascript:void(0);"
+									onclick="editForm('address', '${address.id}')"> <i
+										class="fas fa-edit"></i>
+								</a></td>
+								<td><a href="javascript:void(0);"
+									onclick="deleteData('address', '${address.id}')"> <i
+										class="fas fa-trash-alt"></i>
+								</a></td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr align="center">
+							<td colspan="8">No Address available</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
 			</tbody>
 		</table>
 	</div>
+	<c:if test="${addresses.size() > 0 }">
+		<div class="card-footer">
+			Showing ${number + 1 } to ${size } of ${totalElements }
+			<ul class="pagination text-right" style="margin: -7px;">
+				<c:forEach begin="0" end="${totalPages - 1 }" var="page">
+					<li>
+						<a href="javascript:void(0);" onclick="list('address', ${page}, ${size})">${page+1 }</a>
+					</li>
+				</c:forEach>
+			</ul>
+		</div>
+	</c:if>
 </div>
 

@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -83,22 +85,25 @@ public class UserController {
 	
 	@RequestMapping(path = "/list", method = RequestMethod.GET)
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public String userList(Model model) {
-		
-		List<User> list = this.service.userList();
-		
-		model.addAttribute("users", list);
-				
+	public String userList(Model model, Pageable pageable) {
+		Page<User> pages = this.service.findAll(pageable);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("users", pages.getContent());
 		return "/user/list";
 	}
 	
 	@RequestMapping(path = "/refresh", method = RequestMethod.GET)
-	public String refreshCache(Model model) {
+	public String refreshCache(Model model, Pageable pageable) {
 		this.service.refreshCache();
-		List<User> list = this.service.userList();
-		
-		model.addAttribute("users", list);
-				
+		Page<User> pages = this.service.findAll(pageable);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("users", pages.getContent());
 		return "/user/list";
 	}
 	

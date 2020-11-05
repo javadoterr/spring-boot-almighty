@@ -10,6 +10,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.javadoterr.api.model.Address;
@@ -86,7 +88,14 @@ public class AddressServiceImpl implements AddressService{
 	@Cacheable("addressCache")
 	public List<Address> addressList() {
 		
-		return repository.findAll();
+		return repository.addressList();
+	}
+	
+	//for paging implementation
+	@Override
+	@Cacheable("addressCache")
+	public Page<Address> findAll(Pageable pageable) {
+		return this.repository.findAll(pageable);
 	}
 	
 	@Override

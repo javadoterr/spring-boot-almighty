@@ -45,7 +45,7 @@
 			<div class="col-md-4">
 				<form:select class="form-control" path="userId">
 					<c:forEach var="user" items="${users}">
-						<form:option value="${user.id }">${user.userName }</form:option>
+						<form:option value="${user.id }">${user.fullName }</form:option>
 					</c:forEach>
 				</form:select>
 			</div>
@@ -54,6 +54,10 @@
 	<div class="card-footer">
 		<form:button class="btn btn-xs btn-default" value="Save">
 			<i class="far fa-save"></i>Save
+			<%-- <c:choose>
+				<c:when test="${isNew}">Save</c:when>
+				<c:otherwise>Update</c:otherwise>
+			</c:choose> --%>
 		</form:button>		
 	</div>
 </form:form>

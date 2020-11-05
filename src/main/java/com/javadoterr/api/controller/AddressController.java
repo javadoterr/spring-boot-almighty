@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -54,10 +56,13 @@ public class AddressController {
 	}
 
 	@RequestMapping(path = "/list")
-	public String addressList(Model model) {
-		List<Address> list = service.addressList();
-		
-		model.addAttribute("addresses", list);
+	public String addressList(Model model, Pageable pageable) {
+		Page<Address> pages = this.service.findAll(pageable);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("addresses", pages.getContent());
 		
 		return "/address/list";
 	}
@@ -65,10 +70,15 @@ public class AddressController {
 	
 	
 	@RequestMapping(path = "/refresh", method = RequestMethod.GET)
-	public String refreshCache(Model model) {
+	public String refreshCache(Model model, Pageable pageable) {
 		this.service.refreshCache();
-		List<Address> list = this.service.addressList();
-		model.addAttribute("addresses", list);
+		
+		Page<Address> pages = this.service.findAll(pageable);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("addresses",pages.getContent());
 				
 		return "/address/list";
 	}

@@ -10,6 +10,8 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +37,20 @@ public class UserServiceImpl implements UserService {
 	@Cacheable
 //	@Cacheable("userCache")
 	public List<User> userList() {
-		return userRepository.findAll();
+		return userRepository.userList();
 	}
+	
+	
+	//for paging implementation
+	@Override
+	@Cacheable
+	public Page<User> findAll(Pageable pageable) {
+		return this.userRepository.findAll(pageable);
+	}
+
+	
+	
+	
 
 	@Override
 	public User findUserById(Long id) {
@@ -96,4 +110,5 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	
 }
