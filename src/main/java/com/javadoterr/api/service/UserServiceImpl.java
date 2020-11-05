@@ -22,7 +22,6 @@ import com.javadoterr.api.respository.RoleRepository;
 import com.javadoterr.api.respository.UserRepository;
 
 @Service
-@CacheConfig(cacheNames = { "userCache" })
 public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
@@ -35,15 +34,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Cacheable
-//	@Cacheable("userCache")
 	public List<User> userList() {
 		return userRepository.userList();
 	}
 
 	// for paging implementation
 	@Override
-	@Cacheable
 	public Page<User> findAll(Pageable pageable) {
 		return this.userRepository.findAll(PageRequest.of(pageable.getPageNumber() - 1, 3));
 	}
@@ -56,8 +52,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@CachePut(key = "#user")
-//	@CachePut(value = "userCache", key = "#user")
 	public String addUser(User user) {
 		String message = "";
 		JSONObject jsonObject = new JSONObject();
@@ -67,8 +61,10 @@ public class UserServiceImpl implements UserService {
 			} else {
 				message = "Updated";
 			}
-			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-			user.setRole(roleRepository.findById(user.getRoleId()).get());
+			if(user.getProfilePhoto() == null) {
+				user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+				user.setRole(roleRepository.findById(user.getRoleId()).get());
+			}
 			jsonObject.put("status", "success");
 			jsonObject.put("title", message + " Confirmation");
 			jsonObject.put("message", userRepository.save(user).getUserName() + " " + message + " successfully");
@@ -80,8 +76,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@CacheEvict(allEntries = true)
-//	@CacheEvict(value = "userCache", allEntries = true)
 	public String deleteUserById(Long id) {
 		JSONObject jsonObject = new JSONObject();
 		try {
@@ -100,8 +94,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@CacheEvict(allEntries = true)
-//	@CacheEvict(value = "userCache", allEntries = true)
 	public void refreshCache() {
 
 	}

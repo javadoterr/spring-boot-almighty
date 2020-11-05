@@ -23,6 +23,37 @@ $(function(){
 		});
 		saveRequestData(frm, data, "address");
 	});
+	
+	$("#uploadImage").on("submit", function(e){
+		e.preventDefault();
+		var formData = new FormData(this);
+		$.ajax({
+			type:"POST",
+			url:"/springboot/user/upload",
+			data:formData,
+			cache:false,
+			dataType:"json",
+			contentType:false,
+			processData:false,
+			success:function(data){
+				var title = "Upload Confirmation";
+				if(data.status == "success"){
+					toastr.success(data.message,title,{
+						closeButton:true
+					});
+					fetchList("user");
+					$("#uploadModal").modal("hide");
+					$("body").removeClass("modal-open");
+					$(".modal-backdrop").remove();
+				}else{
+					toastr.error(data.message,title,{
+						allowHtml:true,
+						closeButton:true
+					});
+				}
+			}
+		});
+	});
 });
 
 function saveRequestData(frm, data, type){

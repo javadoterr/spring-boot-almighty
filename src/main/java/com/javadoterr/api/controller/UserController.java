@@ -11,12 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.javadoterr.api.model.User;
+import com.javadoterr.api.service.AmazonService;
 import com.javadoterr.api.service.UserService;
 import com.javadoterr.api.utils.ErrorUtils;
 import com.javadoterr.api.utils.MethodsUtils;
@@ -25,12 +29,11 @@ import com.javadoterr.api.utils.MethodsUtils;
 @RequestMapping(value = "/user")
 public class UserController {
 	
+	@Autowired
 	private UserService service;
 
 	@Autowired
-	public UserController(UserService service) {
-		this.service = service;
-	}
+	private AmazonService amazonService;
 	
 	@RequestMapping(path = "login", method = RequestMethod.GET)
 	public String login(Model model, String error, String logout) {
@@ -106,5 +109,10 @@ public class UserController {
 		 return this.service.deleteUserById(id);
 	}
 	
+	@PostMapping(path = "/upload")
+	@ResponseBody
+	public String fileUpload(@RequestParam("file") MultipartFile multipartFile,@RequestParam("editUserId") Long editUserId) {
+		return amazonService.uploadFile(multipartFile, service.findUserById(editUserId));
+	}
 
 }

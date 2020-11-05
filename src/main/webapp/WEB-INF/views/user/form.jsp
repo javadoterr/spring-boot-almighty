@@ -18,6 +18,14 @@
 				<div class="col-md-4">
 					<form:input class="form-control" path="userId" placeholder="Enter User Id" required="true"/>
 				</div>
+				<c:if test="${userForm.id ne null }">
+					<label class="col-md-2 control-label">Profile Picture :</label>
+					<div class="col-md-4">
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#uploadModal">
+							<i class="fas fa-arrow-circle-up"></i>Upload
+						</button>
+					</div>
+				</c:if>
 			</div>
 			<div class="input-group my-1">
 				<label class="col-md-2 control-label">Full Name :</label>
@@ -61,22 +69,30 @@
 		</div>
 	</form:form>
 </div>
-
-	<%-- <form:form action="${path}/user/add" method="post" modelAttribute="userForm">
-		<form:hidden path="id"/>
-		<p>User Id : <form:input path="userId" placeholder="Enter User Id"/></p>
-		<p>User Name : <form:input path="userName" placeholder="Enter User Name"/></p>
-		<p>Password : <form:input path="password" placeholder="Enter User password"/></p>
-		<p>
-			Role : 
-			<form:select path="role.id">
-				<c:forEach var="role" items="${roles}">
-					<form:option value="${role.id }">${role.name }</form:option>
-				</c:forEach>
-			</form:select>
-		</p>
-		<p>
-			<form:button value="Save">Save</form:button>
-			<a href="${path}/user/list">User List</a>
-		</p>
-	</form:form> --%>
+<c:if test="${userForm.id ne null }">
+	<div id="uploadModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id="uploadImage" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+					<div class="modal-header">
+						<h4 class="modal-title">Upload User Profile for ${userForm.fullName}</h4>
+						<button type="button" class="close" data-dismiss="modal"><i class="fas fa-window-close"></i></button>
+					</div>
+					<div class="modal-body">
+						<div class="input-group">
+							<input type="hidden" name="editUserId" value="${userForm.id }">
+							<label class="col-md-3 control-label">Upload File :</label>
+							<div class="col-md-6">
+								<input type="file" name="file" class="form-control">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-default">Upload</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</c:if>

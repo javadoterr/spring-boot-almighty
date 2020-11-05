@@ -21,8 +21,8 @@
 			class="table table-border table-condensed table-hover table-striped">
 			<thead>
 				<tr>
-					<th>User Id</th>
 					<th>Full Name</th>
+					<th>User Id</th>
 					<th>User Name</th>
 					<th>Email</th>
 					<th>Mobile</th>
@@ -36,8 +36,18 @@
 					<c:when test="${users.size() > 0 }">
 						<c:forEach var="user" items="${users}">
 							<tr>
+								<td>
+									<c:choose>
+										<c:when test="${user.profilePhoto eq null }">
+											<i class="far fa-user"></i>
+										</c:when>
+										<c:otherwise>
+											<img alt="image" src="${user.profilePhoto }" class="img-circle" width="32px" height="32px">
+										</c:otherwise>
+									</c:choose>
+									${user.fullName }
+								</td>
 								<td>${user.userId }</td>
-								<td>${user.fullName }</td>
 								<td>${user.userName }</td>
 								<td>${user.email }</td>
 								<td>${user.mobile }</td>

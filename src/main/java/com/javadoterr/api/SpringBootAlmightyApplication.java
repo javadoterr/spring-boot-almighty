@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-//@EnableScheduling
-//@EnableBatchProcessing
 @EnableJpaRepositories(basePackages = "com.javadoterr.api")
 public class SpringBootAlmightyApplication {
 

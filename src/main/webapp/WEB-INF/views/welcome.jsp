@@ -10,7 +10,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 <link rel="stylesheet" href="${path }/webjars/bootstrap/4.1.3/css/bootstrap.min.css">
 
-<script type="text/javascript" src="${path }/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="${path}/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="${path}/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${path}/js/jquery.boot.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <title>welcome</title>

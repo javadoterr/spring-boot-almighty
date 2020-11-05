@@ -42,10 +42,6 @@ public class AddressServiceImpl implements AddressService{
 
 
 	@Override
-	@Caching(put = {
-			@CachePut(value = "addressCache", key = "#address")
-	})
-//	@CachePut(value = "addressCache", key = "#address")
 	public String addAddress(Address address) {
 		String message = "";
 		JSONObject jsonObject = new JSONObject();
@@ -70,7 +66,6 @@ public class AddressServiceImpl implements AddressService{
 
 
 	@Override
-	@CacheEvict(value = "addressCache", allEntries = true)
 	public String deleteAddressById(Long id) {
 		JSONObject jsonObject = new JSONObject();
 		try {
@@ -86,7 +81,6 @@ public class AddressServiceImpl implements AddressService{
 
 
 	@Override
-	@Cacheable("addressCache")
 	public List<Address> addressList() {
 		
 		return repository.addressList();
@@ -94,16 +88,11 @@ public class AddressServiceImpl implements AddressService{
 	
 	//for paging implementation
 	@Override
-	@Cacheable("addressCache")
 	public Page<Address> findAll(Pageable pageable) {
 		return this.repository.findAll(PageRequest.of(pageable.getPageNumber() - 1, 3));
 	}
 	
 	@Override
-	@Caching(evict = {
-			@CacheEvict(value = "addressCache", allEntries = true)
-	})
-//	@CacheEvict(value = "addressCache", allEntries = true)
 	public void refreshCache() {
 		
 	}

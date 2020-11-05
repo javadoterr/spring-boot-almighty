@@ -45,6 +45,8 @@ public class User extends AbstractPersistable<Long> {
 	private String mobile;
 	
 	private transient Long roleId;
+	
+	private String profilePhoto;
 
 	@ManyToOne
 	@JoinColumn(name = "role_id")
@@ -133,5 +135,15 @@ public class User extends AbstractPersistable<Long> {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
+
+	public String getProfilePhoto() {
+		return profilePhoto;
+	}
+
+	public void setProfilePhoto(String profilePhoto) {
+		this.profilePhoto = profilePhoto;
+	}
+	
+	
 
 }
