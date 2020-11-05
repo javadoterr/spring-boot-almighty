@@ -60,9 +60,36 @@
 		<div class="card-footer">
 			Showing ${number + 1 } to ${size } of ${totalElements }
 			<ul class="pagination text-right" style="margin: -7px;">
-				<c:forEach begin="0" end="${totalPages - 1 }" var="page">
-					<li><a href="javascript:void(0);" onclick="list('user', ${page}, ${size})">${page+1 }</a></li>
+				<c:choose>
+					<c:when test="${current == 1 }">
+						<li class="disabled"><a href="javascript:void(0);">First</a></li>
+						<li class="disabled"><a href="javascript:void(0);">Prev</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="disabled"><a href="javascript:void(0);" onclick="list('user', 1)">First</a></li>
+						<li class="disabled"><a href="javascript:void(0);" onclick="list('user', '${current - 1}')">Prev</a></li>
+					</c:otherwise>
+				</c:choose>
+				<c:forEach begin="${begin }" end="${end }" var="i">
+					<c:choose>
+						<c:when test="${i == current }">
+							<li class="active"><a href="javascript:void(0);" onclick="list('user', '${i}')">${i}</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="javascript:void(0);" onclick="list('user', '${i}')">${i}</a></li>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
+				<c:choose>
+					<c:when test="${current == totalPages }">
+						<li class="disabled"><a href="javascript:void(0);">Next</a></li>
+						<li class="disabled"><a href="javascript:void(0);">Last</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="javascript:void(0);" onclick="list('user', '${current + 1}')">Next</a></li>
+						<li><a href="javascript:void(0);" onclick="list('user', '${totalPages}')">Last</a></li>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 		</div>
 	</c:if>

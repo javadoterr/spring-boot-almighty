@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -95,7 +96,7 @@ public class AddressServiceImpl implements AddressService{
 	@Override
 	@Cacheable("addressCache")
 	public Page<Address> findAll(Pageable pageable) {
-		return this.repository.findAll(pageable);
+		return this.repository.findAll(PageRequest.of(pageable.getPageNumber() - 1, 3));
 	}
 	
 	@Override

@@ -1,7 +1,5 @@
 package com.javadoterr.api.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +10,17 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.javadoterr.api.model.Address;
-import com.javadoterr.api.model.User;
 import com.javadoterr.api.service.AddressService;
 import com.javadoterr.api.service.UserService;
 import com.javadoterr.api.utils.ErrorUtils;
+import com.javadoterr.api.utils.MethodsUtils;
 
 @Controller
 @RequestMapping(value = "/address")
@@ -58,12 +54,8 @@ public class AddressController {
 	@RequestMapping(path = "/list")
 	public String addressList(Model model, Pageable pageable) {
 		Page<Address> pages = this.service.findAll(pageable);
-		model.addAttribute("number", pages.getNumber());
-		model.addAttribute("totalPages", pages.getTotalPages());
-		model.addAttribute("totalElements", pages.getTotalElements());
-		model.addAttribute("size", pages.getSize());
 		model.addAttribute("addresses", pages.getContent());
-		
+		MethodsUtils.pageModel(model, pages);
 		return "/address/list";
 	}
 	
@@ -72,13 +64,9 @@ public class AddressController {
 	@RequestMapping(path = "/refresh", method = RequestMethod.GET)
 	public String refreshCache(Model model, Pageable pageable) {
 		this.service.refreshCache();
-		
 		Page<Address> pages = this.service.findAll(pageable);
-		model.addAttribute("number", pages.getNumber());
-		model.addAttribute("totalPages", pages.getTotalPages());
-		model.addAttribute("totalElements", pages.getTotalElements());
-		model.addAttribute("size", pages.getSize());
 		model.addAttribute("addresses",pages.getContent());
+		MethodsUtils.pageModel(model, pages);
 				
 		return "/address/list";
 	}
